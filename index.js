@@ -46,17 +46,9 @@ http.listen(3000, function(){
 		}
 	});
 
-  // socket.on('left', function(){
-  // 	console.log('left');
-  // 	io.to(webClient).emit('left');
-  // });
-
-  // socket.on('right', function(){
-  // 	console.log('right');
-  // 	io.to(webClient).emit('right');
-  // });
 
 	socket.on('move', function(obj){
+		console.log(obj);
 		io.to(webClient).emit('movement', obj);
 	});
 
