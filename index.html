@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Mobile Control</title>
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+		}
+
+		h2 {
+			font-weight: 300;
+		}
+
+		.wrapper {
+			padding: 0;
+			margin: 0;
+			width: 100%;
+			height: 100vh;
+			background: url(images/phone.jpg) center center;
+			background-repeat: no-repeat;
+			-webkit-background-size: cover;
+			background-size: cover;
+			font-family: 'Lato', sans-serif;
+			font-weight: 300;
+		}
+
+
+		.display {
+			border: 2px solid white;
+			border-radius: 5px;
+			width: 80%;
+			margin: 0 auto;
+		}
+
+		.page1 {
+			width: 50%;
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 35%;
+			margin: 0 auto;
+			color: white;
+			text-align: center;
+			padding: 20px;
+			background: rgba(0,0,0,0.55);
+			border-radius: 4px;
+		}
+
+		.intro {
+			padding: 30px;
+			text-align: center;
+			padding-top: 130px;
+			display: none;
+			color: white;
+			border-radius: 4px;
+		}
+
+		.circle {
+			width: 100px;
+			height: 100px;
+			background: red;
+			border-radius: 50%;
+			position: absolute;
+			left: 30%;
+			top: 20%;
+		}
+
+		.container {
+			height: 400px;
+		}
+
+		#imgLogo {
+			height: 100%;
+		}
+
+		#stack {
+		    width: 130px;
+		    height: 260px;
+		    border: solid 1px black;
+		    border-top: 0px;
+		}
+
+		.brick {
+		    width: 11px;
+		    height: 11px;
+		    border: solid 1px white;
+		    background: white;
+		    float: left;
+		}
+		.brick.on {
+		    background: black;
+		}
+		.brick.now {
+		    background: green;
+		}
+
+
+	</style>
+</head>
+<body>
+	
+	<div class="wrapper">
+		<div class="page1">
+			<h2>Please open the website on your phone and enter this key:</h2>
+			<div class="display"></div>
+		</div>
+		<div class="intro">
+			<div class="container" style="perspective: 300;">
+			  <img src="http://upload.wikimedia.org/wikipedia/commons/c/cf/Samsung_Galaxy_S5.png" id="imgLogo" class="logo">
+			</div>
+		</div>
+	</div>
+
+
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script>
+
+	var socket = io();
+
+	socket.on('accessGranted', function(){
+		$('.page1').fadeOut();
+		$('.wrapper').css('background', 'url(http://subtlepatterns.com/patterns/diagmonds.png)');
+		$('.intro').fadeIn();
+
+	});
+
+	socket.on('code', function(code){
+		$('.display').append($('<h2>').text(code));
+	});
+
+	socket.on('movement', function(obj){
+		var logo = document.getElementById("imgLogo");
+		logo.style.webkitTransform =
+		  "rotate("+ obj.lr +"deg) rotate3d(1,0,0, "+ (obj.fb*-1)+"deg)";
+		logo.style.MozTransform = "rotate("+ obg.lr +"deg)";
+		logo.style.transform =
+		  "rotate("+ obj.lr +"deg) rotate3d(1,0,0, "+ (obj.fb*-1)+"deg)";
+	});
+
+
+
+	</script>
+</body>
+</html>
